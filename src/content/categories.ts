@@ -285,6 +285,63 @@ export const CATEGORIES: CategoryMeta[] = [
       },
     ],
   },
+  {
+    id: 'php',
+    name: 'PHP',
+    shortDescription: 'PHP 8.x, OOP, Composer, PDO, PHP-FPM, OPcache & security.',
+    icon: 'language-php',
+    accentColor: '#777BB4',
+    topics: [
+      {
+        id: 'php-fundamentals',
+        categoryId: 'php',
+        slug: 'php-fundamentals',
+        title: '1. PHP Fundamentals & Syntax',
+        level: 'beginner',
+        estimatedMinutes: 25,
+        description: 'Server-side execution, strict_types, variables, and type juggling.',
+        exampleCount: 50,
+      },
+    ],
+  },
+  {
+    id: 'laravel',
+    name: 'Laravel',
+    shortDescription: 'Eloquent, Service Container, Queues, Sanctum & Octane.',
+    icon: 'laravel',
+    accentColor: '#E05D44',
+    topics: [
+      {
+        id: 'laravel-lifecycle-routing',
+        categoryId: 'laravel',
+        slug: 'laravel-lifecycle-routing',
+        title: '1. Request Lifecycle & Routing',
+        level: 'beginner',
+        estimatedMinutes: 30,
+        description: 'index.php, HTTP Kernel, route model binding, and named routes.',
+        exampleCount: 50,
+      },
+    ],
+  },
+  {
+    id: 'mysql',
+    name: 'MySQL',
+    shortDescription: 'Joins, B-Tree Indexes, EXPLAIN, InnoDB, MVCC & SQL tuning.',
+    icon: 'database',
+    accentColor: '#0EA5E9',
+    topics: [
+      {
+        id: 'mysql-fundamentals-types',
+        categoryId: 'mysql',
+        slug: 'mysql-fundamentals-types',
+        title: '1. MySQL Data Types & Schemas',
+        level: 'beginner',
+        estimatedMinutes: 25,
+        description: 'INT vs BIGINT, VARCHAR vs TEXT, DECIMAL vs FLOAT, and UTF8MB4.',
+        exampleCount: 50,
+      },
+    ],
+  },
 ];
 
 export function getCategoryById(id: TechnologyId): CategoryMeta | undefined {

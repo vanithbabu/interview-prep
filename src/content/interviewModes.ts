@@ -8,7 +8,7 @@ export const INTERVIEW_MODES: MockInterviewModeConfig[] = [
     defaultCount: 5,
     secondsPerQuestion: 90,
     difficulties: ['beginner'],
-    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript'],
+    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai', 'typescript'],
   },
   {
     id: 'intermediate',
@@ -17,7 +17,7 @@ export const INTERVIEW_MODES: MockInterviewModeConfig[] = [
     defaultCount: 5,
     secondsPerQuestion: 120,
     difficulties: ['intermediate'],
-    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript'],
+    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai', 'typescript'],
   },
   {
     id: 'advanced',
@@ -26,7 +26,7 @@ export const INTERVIEW_MODES: MockInterviewModeConfig[] = [
     defaultCount: 5,
     secondsPerQuestion: 150,
     difficulties: ['advanced'],
-    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript'],
+    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai', 'typescript'],
   },
   {
     id: 'senior',
@@ -35,7 +35,7 @@ export const INTERVIEW_MODES: MockInterviewModeConfig[] = [
     defaultCount: 6,
     secondsPerQuestion: 180,
     difficulties: ['intermediate', 'advanced'],
-    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript'],
+    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai', 'typescript'],
   },
   {
     id: 'frontend',
@@ -71,7 +71,7 @@ export const INTERVIEW_MODES: MockInterviewModeConfig[] = [
     defaultCount: 7,
     secondsPerQuestion: 120,
     difficulties: ['beginner', 'intermediate', 'advanced'],
-    categories: ['javascript', 'typescript', 'react', 'nextjs', 'wordpress', 'ai'],
+    categories: ['javascript', 'typescript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai'],
   },
   {
     id: 'custom',
@@ -80,7 +80,7 @@ export const INTERVIEW_MODES: MockInterviewModeConfig[] = [
     defaultCount: 5,
     secondsPerQuestion: 120,
     difficulties: ['beginner', 'intermediate', 'advanced'],
-    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript'],
+    categories: ['javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai', 'typescript'],
   },
 ];
 

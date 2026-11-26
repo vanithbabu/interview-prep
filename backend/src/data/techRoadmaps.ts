@@ -1,6 +1,6 @@
 import type { BackendTopicSummary } from './categoriesFeed.js';
 
-type TechId = 'react' | 'nextjs' | 'wordpress' | 'ai' | 'typescript';
+type TechId = 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
 type Level = 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'coding';
 
 function topic(
@@ -226,4 +226,94 @@ export const TYPESCRIPT_TOPICS: BackendTopicSummary[] = [
   // Level 5 – Coding & Scenarios (24–25)
   topic('typescript', 'ts-challenges', '24. Type-Level Challenges', 'coding', 'Implementing DeepPartial<T>, DeepReadonly<T>, and MyPick.', 45),
   topic('typescript', 'ts-scenarios', '25. Real-World TS Scenarios', 'coding', 'Eliminating `any` in legacy codebases and strict form typing.', 50),
+];
+
+export const PHP_TOPICS: BackendTopicSummary[] = [
+  // Level 1 – Beginner (1–5)
+  topic('php', 'php-fundamentals', '1. PHP Fundamentals & Syntax', 'beginner', 'Server-side execution, strict_types, variables, and type juggling.', 25),
+  topic('php', 'php-types-arrays', '2. Data Types & Arrays', 'beginner', 'Indexed vs associative arrays, array_map, array_filter, and spread.', 30),
+  topic('php', 'php-functions-closures', '3. Functions, Closures & Arrow Fns', 'beginner', 'Type hints, union types, fn(), use(), and variadic arguments.', 30),
+  topic('php', 'php-superglobals-forms', '4. Superglobals & Request Handling', 'beginner', '$_GET, $_POST, $_SERVER, input validation, and sanitization.', 25),
+  topic('php', 'php-sessions-cookies', '5. Sessions & Cookies', 'beginner', 'session_start, HttpOnly/Secure/SameSite cookies, and CSRF basics.', 30),
+
+  // Level 2 – Intermediate (6–10)
+  topic('php', 'php-oop-classes', '6. OOP: Classes, Interfaces & Traits', 'intermediate', 'Inheritance, abstract classes, interfaces, traits, and late static binding.', 40),
+  topic('php', 'php-namespaces-composer', '7. Namespaces, PSR-4 & Composer', 'intermediate', 'Autoloading, composer.json, lockfile, and semantic versioning.', 30),
+  topic('php', 'php-exceptions-errors', '8. Error Handling & Exceptions', 'intermediate', 'Throwable, Error vs Exception, custom exceptions, and try/catch/finally.', 30),
+  topic('php', 'php-pdo-prepared', '9. PDO & Prepared Statements', 'intermediate', 'Preventing SQL injection, bindParam vs execute, and fetch modes.', 35),
+  topic('php', 'php-modern-php8', '10. Modern PHP 8.x Features', 'intermediate', 'Match expressions, enums, readonly properties, attributes, and nullsafe.', 35),
+
+  // Level 3 – Advanced (11–15)
+  topic('php', 'php-lifecycle-fpm', '11. PHP-FPM & Request Lifecycle', 'advanced', 'Nginx + PHP-FPM workers, OPcache bytecode caching, and memory limits.', 40),
+  topic('php', 'php-generators-iterators', '12. Generators & Memory Efficiency', 'advanced', 'yield keyword, processing huge CSV/DB streams without OOM.', 35),
+  topic('php', 'php-spl-magic', '13. Magic Methods & Reflection', 'advanced', '__construct, __get/__set, __invoke, and ReflectionClass in DI containers.', 35),
+  topic('php', 'php-security', '14. PHP Security Hardening', 'advanced', 'password_hash/verify, XSS escaping, CSRF tokens, and file upload safety.', 40),
+  topic('php', 'php-testing-phpunit', '15. Testing with PHPUnit & Pest', 'advanced', 'Unit vs feature tests, mocking dependencies, and data providers.', 35),
+
+  // Level 4 – Expert & Coding (16–20)
+  topic('php', 'php-dependency-injection', '16. Dependency Injection & SOLID', 'expert', 'IoC containers, constructor injection, and PSR-11/PSR-15 standards.', 40),
+  topic('php', 'php-async-queues', '17. Concurrency, Swoole & Workers', 'expert', 'Why PHP is share-nothing and how queues/workers handle background jobs.', 40),
+  topic('php', 'php-performance', '18. Performance & OPcache Tuning', 'expert', 'OPcache preloading, JIT, N+1 avoidance, and Blackfire/Xdebug profiling.', 40),
+  topic('php', 'php-api-curl', '19. REST APIs & HTTP Clients', 'expert', 'JSON encoding, status codes, Guzzle/cURL timeouts, and retries.', 35),
+  topic('php', 'php-coding-scenarios', '20. PHP Interview Coding Scenarios', 'coding', 'Implementing rate limiter, safe file parser, and custom DI container.', 45),
+];
+
+export const LARAVEL_TOPICS: BackendTopicSummary[] = [
+  // Level 1 – Beginner (1–5)
+  topic('laravel', 'laravel-lifecycle-routing', '1. Request Lifecycle & Routing', 'beginner', 'index.php, HTTP Kernel, route model binding, and named routes.', 30),
+  topic('laravel', 'laravel-controllers-requests', '2. Controllers & Form Requests', 'beginner', 'Resource controllers, FormRequest validation, and authorize().', 30),
+  topic('laravel', 'laravel-blade-vite', '3. Blade Templates & Components', 'beginner', 'Layouts, @extends/@section, anonymous components, and XSS escaping.', 25),
+  topic('laravel', 'laravel-migrations-seeders', '4. Migrations, Seeders & Factories', 'beginner', 'Schema builder, rollbacks, Model factories, and Faker.', 30),
+  topic('laravel', 'laravel-eloquent-basics', '5. Eloquent ORM Fundamentals', 'beginner', 'Models, mass assignment ($fillable), scopes, and soft deletes.', 35),
+
+  // Level 2 – Intermediate (6–10)
+  topic('laravel', 'laravel-relationships', '6. Eloquent Relationships', 'intermediate', 'hasOne, hasMany, belongsToMany, polymorphic, and pivot tables.', 40),
+  topic('laravel', 'laravel-eager-loading', '7. N+1 Problem & Eager Loading', 'intermediate', 'with(), load(), withCount(), and preventing lazy loading in dev.', 35),
+  topic('laravel', 'laravel-middleware', '8. Middleware & Pipeline Pattern', 'intermediate', 'Global vs route middleware, termination, and request filtering.', 30),
+  topic('laravel', 'laravel-service-container', '9. Service Container & Providers', 'intermediate', 'bind(), singleton(), auto-resolution, and register() vs boot().', 40),
+  topic('laravel', 'laravel-facades-helpers', '10. Facades & Contracts', 'intermediate', 'How Facades resolve from the container and mocking Facades in tests.', 30),
+
+  // Level 3 – Advanced (11–15)
+  topic('laravel', 'laravel-auth-sanctum', '11. Auth, Sanctum & Policies', 'advanced', 'Guards, Sanctum SPA/API tokens, Gates, and Model Policies.', 40),
+  topic('laravel', 'laravel-queues-jobs', '12. Queues, Jobs & Horizon', 'advanced', 'ShouldQueue, Redis workers, retries, backoff, and failed_jobs.', 40),
+  topic('laravel', 'laravel-events-listeners', '13. Events, Listeners & Observers', 'advanced', 'Decoupling side effects, ShouldQueue listeners, and model observers.', 35),
+  topic('laravel', 'laravel-api-resources', '14. API Resources & Versioning', 'advanced', 'JsonResource, ResourceCollection, whenLoaded(), and pagination.', 35),
+  topic('laravel', 'laravel-caching-redis', '15. Caching, Tags & Rate Limiting', 'advanced', 'Cache::remember(), atomic locks, RateLimiter, and config:cache.', 35),
+
+  // Level 4 – Expert & Coding (16–20)
+  topic('laravel', 'laravel-transactions-locks', '16. DB Transactions & Race Conditions', 'expert', 'DB::transaction(), lockForUpdate(), and afterCommit() hooks.', 40),
+  topic('laravel', 'laravel-testing', '17. Feature Testing & Mocking', 'expert', 'RefreshDatabase, actingAs(), Queue::fake(), and Http::fake().', 40),
+  topic('laravel', 'laravel-architecture', '18. Clean Architecture & Actions', 'expert', 'Thin controllers, Service/Action classes, DTOs, and Repositories.', 40),
+  topic('laravel', 'laravel-octane-scaling', '19. Laravel Octane & Scaling', 'expert', 'Swoole/RoadRunner memory leaks, stateless services, and Horizon.', 40),
+  topic('laravel', 'laravel-coding-scenarios', '20. Laravel Interview Scenarios', 'coding', 'Fixing N+1 checkout, idempotent webhooks, and multi-tenant scoping.', 50),
+];
+
+export const MYSQL_TOPICS: BackendTopicSummary[] = [
+  // Level 1 – Beginner (1–5)
+  topic('mysql', 'mysql-fundamentals-types', '1. MySQL Data Types & Schemas', 'beginner', 'INT vs BIGINT, VARCHAR vs TEXT, DECIMAL vs FLOAT, and UTF8MB4.', 25),
+  topic('mysql', 'mysql-crud-filtering', '2. SELECT, WHERE & Sorting', 'beginner', 'Filtering, LIKE wildcards, LIMIT/OFFSET, and NULL handling (IS NULL).', 25),
+  topic('mysql', 'mysql-joins', '3. INNER, LEFT, RIGHT & SELF JOINs', 'beginner', 'Combining normalized tables and spotting accidental Cartesian joins.', 35),
+  topic('mysql', 'mysql-aggregations', '4. GROUP BY, HAVING & Aggregates', 'beginner', 'COUNT/SUM/AVG, WHERE vs HAVING, and ONLY_FULL_GROUP_BY.', 30),
+  topic('mysql', 'mysql-constraints-keys', '5. Primary, Foreign & Unique Keys', 'beginner', 'Referential integrity, ON DELETE CASCADE, and composite keys.', 30),
+
+  // Level 2 – Intermediate (6–10)
+  topic('mysql', 'mysql-normalization', '6. Normalization (1NF–3NF) & Denorm', 'intermediate', 'Eliminating redundancy vs strategic denormalization for read speed.', 35),
+  topic('mysql', 'mysql-indexes-btree', '7. B-Tree Indexes & Composite Keys', 'intermediate', 'How B-Tree works, leftmost prefix rule, and index selectivity.', 40),
+  topic('mysql', 'mysql-explain-plan', '8. EXPLAIN & Query Execution Plans', 'intermediate', 'Reading type (ALL vs ref vs range), key, rows, and Extra columns.', 40),
+  topic('mysql', 'mysql-subqueries-cte', '9. Subqueries, CTEs & Window Fns', 'intermediate', 'WITH (CTEs), ROW_NUMBER(), RANK(), LAG/LEAD, and EXISTS vs IN.', 40),
+  topic('mysql', 'mysql-transactions-acid', '10. Transactions & ACID Properties', 'intermediate', 'COMMIT, ROLLBACK, savepoints, and InnoDB redo/undo logs.', 35),
+
+  // Level 3 – Advanced (11–15)
+  topic('mysql', 'mysql-isolation-levels', '11. Isolation Levels & MVCC', 'advanced', 'READ COMMITTED vs REPEATABLE READ, phantom reads, and MVCC.', 40),
+  topic('mysql', 'mysql-locking-deadlocks', '12. Row Locks, Gap Locks & Deadlocks', 'advanced', 'FOR UPDATE, shared vs exclusive locks, and diagnosing deadlocks.', 40),
+  topic('mysql', 'mysql-innodb-internals', '13. InnoDB Architecture & Buffer Pool', 'advanced', 'Clustered index, secondary index lookups, and innodb_buffer_pool_size.', 40),
+  topic('mysql', 'mysql-pagination-perf', '14. Keyset Pagination & Slow Queries', 'advanced', 'Why deep OFFSET is slow and how cursor/keyset pagination fixes it.', 35),
+  topic('mysql', 'mysql-security-injection', '15. SQL Security & Least Privilege', 'advanced', 'Prepared statements, user privileges, backups, and point-in-time recovery.', 30),
+
+  // Level 4 – Expert & Coding (16–20)
+  topic('mysql', 'mysql-replication-scaling', '16. Replication, Read Replicas & Lag', 'expert', 'Primary-replica binlog replication, failover, and replica lag.', 40),
+  topic('mysql', 'mysql-partitioning-sharding', '17. Partitioning & Sharding Strategies', 'expert', 'Range/hash partitioning, hot shards, and horizontal scaling trade-offs.', 40),
+  topic('mysql', 'mysql-fulltext-json', '18. JSON Columns & Full-Text Search', 'expert', 'Generated columns + indexes on JSON, and FULLTEXT indexes.', 35),
+  topic('mysql', 'mysql-query-tuning', '19. Slow Query Log & Index Tuning', 'expert', 'Covering indexes, avoiding functions on indexed columns, and UNION ALL.', 40),
+  topic('mysql', 'mysql-coding-scenarios', '20. SQL Interview Query Challenges', 'coding', 'Top-N per group, 2nd highest salary, gaps/islands, and deduplication.', 50),
 ];

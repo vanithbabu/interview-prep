@@ -66,7 +66,14 @@ function buildFallbackExamplesBatch(
 ): TopicExampleItem[] {
   const groupEnd = batchStart + 9;
   const groupTitle = `${lesson.title} (${batchStart}–${groupEnd})`;
-  const lang = lesson.categoryName === 'WordPress' ? 'PHP' : 'JavaScript';
+  const lang =
+    lesson.categoryName === 'WordPress' ||
+    lesson.categoryName === 'PHP' ||
+    lesson.categoryName === 'Laravel'
+      ? 'PHP'
+      : lesson.categoryName === 'MySQL'
+        ? 'SQL'
+        : 'JavaScript';
 
   return Array.from({ length: 10 }, (_, idx) => {
     const num = batchStart + idx;
@@ -274,7 +281,12 @@ export function getDynamicTopicLesson(id: string): TopicLesson | undefined {
         codeExamples: [
           {
             title: `Example 1: Core ${summary.title} Pattern`,
-            language: cat.name === 'WordPress' ? 'PHP' : 'TypeScript',
+            language:
+              cat.name === 'WordPress' || cat.name === 'PHP' || cat.name === 'Laravel'
+                ? 'PHP'
+                : cat.name === 'MySQL'
+                  ? 'SQL'
+                  : 'TypeScript',
             code: `// ${summary.title}\n// Practice this concept in ${cat.name} (${summary.level})`,
             expectedOutput: `Demonstrates ${summary.title} cleanly.`,
           },

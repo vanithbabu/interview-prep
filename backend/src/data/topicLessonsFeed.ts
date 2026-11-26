@@ -1,6 +1,8 @@
 import { JS_LESSONS_PART_1 } from './jsLessonsPart1.js';
 import { JS_LESSONS_PART_2 } from './jsLessonsPart2.js';
+import { PHP_LARAVEL_MYSQL_LESSONS } from './phpLaravelMysqlLessons.js';
 import { EXTRA_TOPIC_LESSONS } from './topicLessonsExtra.js';
+import { WP_LESSONS } from './wpLessons.js';
 
 export interface TopicLessonCodeExample {
   title: string;
@@ -11,7 +13,7 @@ export interface TopicLessonCodeExample {
 
 export interface TopicLesson {
   id: string;
-  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'ai' | 'typescript';
+  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
   categoryName: string;
   title: string;
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'coding';
@@ -350,6 +352,8 @@ export const TOPIC_LESSONS: Record<string, TopicLesson> = {
 
 export function getTopicLessonById(id: string): TopicLesson | undefined {
   return (
+    WP_LESSONS[id] ??
+    PHP_LARAVEL_MYSQL_LESSONS[id] ??
     TOPIC_LESSONS[id] ??
     EXTRA_TOPIC_LESSONS[id] ??
     JS_LESSONS_PART_1[id] ??

@@ -8,9 +8,21 @@ import type {
   TopicLesson,
 } from '@/types/content';
 
+const technologyIdSchema = z.enum([
+  'javascript',
+  'react',
+  'nextjs',
+  'wordpress',
+  'php',
+  'laravel',
+  'mysql',
+  'ai',
+  'typescript',
+]);
+
 const topicSummarySchema = z.object({
   id: z.string(),
-  categoryId: z.enum(['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript']),
+  categoryId: technologyIdSchema,
   slug: z.string(),
   title: z.string(),
   level: z.enum(['beginner', 'intermediate', 'advanced', 'expert', 'coding']),
@@ -20,7 +32,7 @@ const topicSummarySchema = z.object({
 });
 
 const categorySchema = z.object({
-  id: z.enum(['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript']),
+  id: technologyIdSchema,
   name: z.string(),
   shortDescription: z.string(),
   icon: z.string(),
@@ -30,7 +42,7 @@ const categorySchema = z.object({
 
 const questionSchema = z.object({
   id: z.string(),
-  categoryId: z.enum(['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript']),
+  categoryId: technologyIdSchema,
   topicId: z.string().optional(),
   title: z.string(),
   difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
@@ -61,7 +73,7 @@ const API_BASE_URL = getApiBaseUrl();
 
 const topicLessonSchema = z.object({
   id: z.string(),
-  categoryId: z.enum(['javascript', 'react', 'nextjs', 'wordpress', 'ai', 'typescript']),
+  categoryId: technologyIdSchema,
   categoryName: z.string(),
   title: z.string(),
   level: z.enum(['beginner', 'intermediate', 'advanced', 'expert', 'coding']),

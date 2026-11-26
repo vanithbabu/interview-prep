@@ -3,6 +3,9 @@ export type TechnologyId =
   | 'react'
   | 'nextjs'
   | 'wordpress'
+  | 'php'
+  | 'laravel'
+  | 'mysql'
   | 'ai'
   | 'typescript';
 

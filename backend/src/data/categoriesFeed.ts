@@ -1,7 +1,10 @@
 import { JS_50_TOPICS } from './jsRoadmap50.js';
 import {
   AI_TOPICS,
+  LARAVEL_TOPICS,
+  MYSQL_TOPICS,
   NEXTJS_TOPICS,
+  PHP_TOPICS,
   REACT_TOPICS,
   TYPESCRIPT_TOPICS,
   WORDPRESS_TOPICS,
@@ -9,7 +12,7 @@ import {
 
 export interface BackendTopicSummary {
   id: string;
-  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'ai' | 'typescript';
+  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
   slug: string;
   title: string;
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'coding';
@@ -19,7 +22,7 @@ export interface BackendTopicSummary {
 }
 
 export interface BackendCategoryMeta {
-  id: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'ai' | 'typescript';
+  id: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
   name: string;
   shortDescription: string;
   icon: string;
@@ -59,6 +62,30 @@ export const CATEGORIES_FEED: BackendCategoryMeta[] = [
     icon: 'wordpress',
     accentColor: '#2563EB',
     topics: WORDPRESS_TOPICS,
+  },
+  {
+    id: 'php',
+    name: 'PHP',
+    shortDescription: '20-module roadmap covering PHP 8.x, OOP, Composer, PDO, PHP-FPM, OPcache & security.',
+    icon: 'language-php',
+    accentColor: '#777BB4',
+    topics: PHP_TOPICS,
+  },
+  {
+    id: 'laravel',
+    name: 'Laravel',
+    shortDescription: '20-module roadmap covering Eloquent, Service Container, Queues, Sanctum & Octane.',
+    icon: 'laravel',
+    accentColor: '#E05D44',
+    topics: LARAVEL_TOPICS,
+  },
+  {
+    id: 'mysql',
+    name: 'MySQL',
+    shortDescription: '20-module roadmap covering Joins, B-Tree Indexes, EXPLAIN, InnoDB, MVCC & SQL tuning.',
+    icon: 'database',
+    accentColor: '#0EA5E9',
+    topics: MYSQL_TOPICS,
   },
   {
     id: 'ai',

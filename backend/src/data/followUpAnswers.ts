@@ -295,6 +295,188 @@ export const FOLLOW_UP_ANSWERS: Record<string, string> = {
     'The variable becomes block-scoped instead of function-scoped, enters the Temporal Dead Zone before declaration, and creates a fresh binding per loop iteration.',
   'How would you implement a `retry(fn, attempts)` helper with exponential backoff?':
     'Loop up to `attempts` times inside `try/catch`; on failure, if attempts remain, `await new Promise(r => setTimeout(r, baseMs * 2 ** attempt))`, then rethrow on the final failure.',
+  // WordPress Follow-Ups
+  'Why should you never edit WordPress core files?':
+    'WordPress core updates overwrite `wp-admin` and `wp-includes`, wiping out any direct edits and leaving security holes if you skip updates. Always extend behavior via hooks (`add_action`, `add_filter`) in a plugin or child theme.',
+  'How does WordPress handle requests before rendering HTML?':
+    '`index.php` loads `wp-load.php` -> `wp-config.php` -> `wp-settings.php`, boots mu-plugins and active plugins, fires `init`, parses permalinks via `WP_Rewrite`, executes the main `WP_Query`, and then loads the matched theme template.',
+  'Why is DISALLOW_FILE_EDIT important in production?':
+    'It removes the built-in Plugin and Theme File Editor from `wp-admin`, so even if an admin account is compromised, an attacker cannot inject arbitrary PHP directly through the dashboard.',
+  'What happens if you change $table_prefix on an existing site?':
+    'WordPress will look for tables with the new prefix and think the site is unconfigured unless you also rename the tables AND update prefixed usermeta/options keys like `wp_capabilities` and `wp_user_level`.',
+  'What is the difference between plugins_loaded and init?':
+    '`plugins_loaded` fires right after all active plugins are included (before the theme and current user are set up). `init` fires later once WordPress, theme `functions.php`, and the logged-in user are ready—making `init` the right place for CPTs and taxonomies.',
+  'What are Must-Use (mu-plugins) and when should you use them?':
+    'Files in `wp-content/mu-plugins/` load automatically on every request before normal plugins and cannot be deactivated from wp-admin. Use them for critical infrastructure like SSO, security headers, or hosting integration.',
+  'Why is wp_enqueue_style preferred over @import in style.css?':
+    'CSS `@import` blocks parallel downloads and forces sequential waterfall requests, slowing First Contentful Paint. `wp_enqueue_style()` outputs `<link>` tags that browsers download in parallel and lets WordPress manage dependencies and versioning.',
+  'When should code go into a plugin instead of functions.php?':
+    'Put presentation/styling helpers in the theme’s `functions.php`, and put business logic (CPTs, shortcodes, REST routes, integrations) in a plugin so switching themes never deletes your data or features.',
+  'What is the fallback if single-product.php does not exist?':
+    'WordPress falls back to `single.php`, then `singular.php`, and finally `index.php` (unless WooCommerce’s template loader provides its own plugin fallback).',
+  'How do Block Themes (FSE) change the Template Hierarchy?':
+    'Block Themes resolve HTML templates inside `templates/` (e.g., `templates/single.html`) using the exact same Template Hierarchy order before falling back to PHP templates or `templates/index.html`.',
+  'What happens if a shortcode echoes instead of returning?':
+    'WordPress evaluates shortcodes while filtering `the_content` before printing the post body, so echoed text appears at the very top of the page or breaks REST/JSON responses.',
+  'When should you build a Gutenberg block instead of a shortcode?':
+    'Build a Gutenberg block when editors need live visual previews, structured sidebar controls, and native block validation—use shortcodes only for quick legacy embeds.',
+  'What is the difference between deactivation and uninstall hooks?':
+    'Deactivation temporarily turns a plugin off (keep user data intact, flush rewrite rules). Uninstall (`uninstall.php`) runs only when the user clicks Delete—that is where you clean up custom tables and options.',
+  'Why should you never call flush_rewrite_rules() on init?':
+    '`flush_rewrite_rules()` regenerates and writes all rewrite rules to `wp_options` in MySQL—running it on every `init` adds expensive DB writes to every page load.',
+  'What happens if you omit the 4th argument when a hook passes 3 parameters?':
+    'WordPress defaults `$accepted_args` to `1`, so your callback only receives the first parameter and throws an `ArgumentCountError` if it expects 2 or 3.',
+  'How do you inspect which callbacks are attached to a hook?':
+    'Inspect the global `$wp_filter["hook_name"]` array or use Query Monitor’s Hooks & Actions panel in local development.',
+  'Why is it hard to remove an anonymous closure hook?':
+    '`remove_action()` / `remove_filter()` requires the exact same function reference. Anonymous closures cannot be referenced externally unless stored in a variable or replaced with a named function/class method.',
+  'What happens if a filter callback forgets to return a value?':
+    'PHP implicitly returns `null`, wiping out the filtered content, title, or array for every subsequent filter and the final output.',
+  'Why does a newly registered CPT return 404 until permalinks are saved?':
+    'WordPress caches permalink regex rules in the `rewrite_rules` option in `wp_options`; until rules are flushed, WordPress does not know how to route the new CPT slug.',
+  'What does show_in_rest => true control?':
+    'It exposes the CPT or taxonomy under `/wp-json/wp/v2/...` AND enables the modern Gutenberg Block Editor (without it, WordPress falls back to the Classic Editor).',
+  'Why is tax_query faster than meta_query for filtering?':
+    'Taxonomy lookups join integer IDs in indexed `wp_term_relationships` tables, whereas `meta_query` filters against an unindexed `LONGTEXT` `meta_value` column.',
+  'What is the difference between hierarchical => true and false?':
+    '`hierarchical => true` behaves like Categories (parent/child tree with checkboxes); `false` behaves like Tags (flat comma-separated labels).',
+  'Why do we call wp_unslash() before sanitizing $_POST in WordPress?':
+    'For legacy reasons WordPress runs `wp_magic_quotes()` on superglobals, adding backslashes to quotes—so you must strip them with `wp_unslash()` before sanitizing or saving.',
+  'What does the third parameter $single = true do in get_post_meta()?':
+    '`true` returns the single scalar value (string/array) directly; `false` wraps all matching meta rows in an indexed array.',
+  'How do ACF Blocks differ from standard React Gutenberg blocks?':
+    'ACF Blocks let PHP/WordPress developers build custom Gutenberg blocks using `block.json` + a PHP render template and ACF fields instead of writing React `edit.js` components.',
+  'Why can querying repeater subfields in WP_Query be slow?':
+    'ACF Repeaters store rows as `repeater_0_field`, `repeater_1_field` in `wp_postmeta`, forcing slow `LIKE "repeater_%_field"` wildcard scans on an unindexed `meta_key`/`meta_value`.',
+  'What causes the "Attempt Block Recovery" validation error in Gutenberg?':
+    'It happens when a Static Block’s `save()` function is changed in JS, so the HTML stored in `post_content` no longer matches the markup `save()` now produces.',
+  'Why is block.json recommended over JS-only registerBlockType?':
+    '`block.json` lets WordPress register assets lazily (loading block JS/CSS only when the block is actually used on a page) and shares metadata cleanly between PHP and JS.',
+  'Why should you never use query_posts()?':
+    '`query_posts()` overwrites the global `$wp_query` main loop, breaks pagination and conditionals, and wastes a second SQL query on top of the main query that already ran.',
+  'What does wp_reset_postdata() do vs wp_reset_query()?':
+    '`wp_reset_postdata()` restores the global `$post` object after a custom `new WP_Query()` loop; `wp_reset_query()` restores the entire `$wp_query` global (only needed after `query_posts()`).',
+  'Why is permission_callback required on every REST route?':
+    'It forces developers to explicitly declare who can access an endpoint (`current_user_can(...)` or `__return_true` for public reads), preventing accidental open write/delete APIs.',
+  'How does cookie auth with X-WP-Nonce work in the REST API?':
+    'Logged-in browser users send their auth cookie automatically, plus an `X-WP-Nonce` header generated with `wp_create_nonce("wp_rest")` to prove the request came from your site (stopping CSRF).',
+  'Why does wp_postmeta use the Entity-Attribute-Value (EAV) pattern, and what is its downside?':
+    'EAV lets plugins store arbitrary custom fields without altering DB schemas, but it requires expensive self-joins and cannot efficiently index or sort mixed types in `LONGTEXT`.',
+  'What is stored in wp_posts besides blog posts?':
+    'Pages, Custom Post Types, media attachments, revisions, navigation menu items, and WooCommerce legacy orders/coupons.',
+  'What is the difference between $wpdb->get_results, get_row, and get_var?':
+    '`get_results()` returns an array of rows, `get_row()` returns a single row object/array, and `get_var()` returns a single scalar value (like a `COUNT(*)`).',
+  'How do you safely handle IN (...) clauses with $wpdb->prepare()?':
+    'Generate one `%d` or `%s` placeholder per array item (e.g., `implode(",", array_fill(0, count($ids), "%d"))`) and pass `$ids` as the arguments to `$wpdb->prepare()`.',
+  'Why should add_role() never run on every init request?':
+    '`add_role()` writes serialized role data to `wp_options` on every call; running it on `init` causes unnecessary DB writes on every page load.',
+  'What is the difference between primitive and meta capabilities (e.g. edit_posts vs edit_post)?':
+    'Primitive capabilities (`edit_posts`) are stored directly on roles, while meta capabilities (`edit_post`, `$post_id`) are mapped dynamically by `map_meta_cap()` based on post ownership and status.',
+  'What is the difference between wp_ajax_ and wp_ajax_nopriv_?':
+    '`wp_ajax_{action}` only fires for logged-in users, whereas `wp_ajax_nopriv_{action}` fires for logged-out visitors.',
+  'Why are nonces alone not enough without capability checks?':
+    'A nonce only proves a logged-in user intentionally triggered the request (anti-CSRF)—it does NOT prove that user has permission (e.g. a Subscriber could still have a valid nonce if you don’t check `current_user_can()`).',
+  'Why did WooCommerce introduce HPOS?':
+    'Moving orders out of `wp_posts`/`wp_postmeta` into dedicated `wp_wc_orders` tables eliminates table contention with blog/product queries and speeds up order filtering by 5x–10x.',
+  'How do you declare HPOS compatibility in a custom WooCommerce plugin?':
+    'Hook `before_woocommerce_init` and call `Automattic\\WooCommerce\\Utilities\\FeaturesUtil::declare_compatibility("custom_order_tables", __FILE__, true)`.',
+  'Why should you avoid overriding entire WooCommerce templates when a hook exists?':
+    'Overridden templates freeze old HTML and require manual diffs whenever WooCommerce updates templates, whereas action/filter hooks stay compatible across updates.',
+  'How do WooCommerce Checkout Blocks change checkout customization?':
+    'Block-based Checkout renders in React using Store API endpoints instead of classic PHP templates, so customizations use SlotFills, Store API extensions, and `woocommerce_store_api_*` hooks.',
+  'What happens if you call wp_schedule_event() without checking wp_next_scheduled()?':
+    'WordPress queues a duplicate cron event on every single page load, flooding `wp_options` and running the job thousands of times.',
+  'When is Action Scheduler better than wp_schedule_single_event()?':
+    'Action Scheduler stores jobs in custom indexed tables, processes batches safely within memory/time limits, and provides built-in retries and UI logging.',
+  'Where are Transients stored if no persistent Object Cache (Redis) is installed?':
+    'Without Redis/Memcached, WordPress stores transients in `wp_options`—so expired transients can bloat the database if not cleaned up.',
+  'Why can full-page caching break WooCommerce cart or user-specific widgets?':
+    'Full-page HTML caches serve the exact same static HTML to everyone, so logged-in headers or cart counts must either bypass cache (`woocommerce_items_in_cart` cookie) or load via AJAX/REST.',
+  'Why is posts_per_page => -1 dangerous in production?':
+    'If a table grows to 50,000 posts, `posts_per_page => -1` loads every post and its meta into PHP memory at once, causing OOM crashes. Always set a sane upper cap like `100`.',
+  'How does Query Monitor help pinpoint a slow plugin?':
+    'Its Queries by Component and HTTP API panels show exact query time, caller stack trace, and plugin/theme attribution for every slow SQL or external request.',
+  'What is the difference between esc_html() and esc_attr()?':
+    '`esc_html()` escapes text inside HTML element bodies, while `esc_attr()` escapes values inside HTML tag attributes (running through the `attribute_escape` filter).',
+  'Why is a WordPress nonce not a substitute for current_user_can()?':
+    'Nonces protect against CSRF; `current_user_can()` enforces authorization. You need both on privileged actions.',
+  'Why does WP_DEBUG_DISPLAY = true break AJAX or REST API responses?':
+    'Any PHP warning or notice printed directly to output corrupts the JSON response body, causing `JSON.parse` errors on the client.',
+  'How do you inspect all SQL queries executed on a page?':
+    'Enable `define("SAVEQUERIES", true)` in local dev and inspect `$wpdb->queries` or use Query Monitor.',
+  'Why does raw SQL REPLACE() corrupt WordPress options and ACF data?':
+    'PHP `serialize()` records exact byte lengths (e.g. `s:22:"https://old-site.local"`). Changing the URL length without updating `s:22` makes `unserialize()` fail and return `false`.',
+  'What are the benefits of Bedrock over a standard WordPress folder layout?':
+    'Bedrock manages WordPress core and plugins via Composer, moves `wp-config` to `.env`, places `wp-content` under `web/app/`, and keeps `wp/` isolated from custom code.',
+  'When is Headless WordPress overkill compared to a classic/block theme?':
+    'For standard content/marketing sites where SEO plugins, WooCommerce checkout, and visual page builders are needed out-of-the-box, a classic/block theme with CDN caching is far simpler and cheaper.',
+  'How do you handle Gutenberg previews in a decoupled Next.js frontend?':
+    'Generate a short-lived signed preview token on WordPress that redirects to Next.js Draft Mode (`/api/draft?secret=...&id=...`), which fetches the latest revision using authenticated credentials.',
+  'How do you prevent race conditions when two requests update the same wp_option?':
+    'Use Redis atomic locks (`wp_cache_add` / Redis `SET NX`), or store high-concurrency counters in a custom SQL table with `UPDATE ... SET count = count + 1` instead of serialized `wp_options`.',
+  'How do you scale WordPress media uploads across multiple web servers?':
+    'Offload `wp-content/uploads` to S3/Cloudflare R2 (via WP Offload Media) behind a CDN so all app servers stay stateless.',
+  // PHP, Laravel & MySQL Follow-Ups
+  'What changed with `0 == ""` in PHP 8 compared to PHP 7?':
+    'In PHP 7, `0 == ""` was `true` because `""` coerced to `0`. In PHP 8+, non-numeric strings are compared as strings (`"0" == ""` -> `false`), fixing a huge source of bugs.',
+  'What is the difference between `const` and `define()` in PHP?':
+    '`const` is evaluated at compile time (can be used inside classes/namespaces, slightly faster), while `define()` runs at runtime (can be placed inside `if` blocks).',
+  'Why does json_encode sometimes turn a filtered PHP array into a JSON object?':
+    '`array_filter()` preserves original array keys—so `[0 => "a", 2 => "c"]` has non-sequential keys, causing `json_encode` to emit `{"0":"a","2":"c"}`. Call `array_values()` first.',
+  'What is the difference between array_merge() and + for arrays?':
+    '`array_merge()` re-indexes numeric keys and overwrites duplicate string keys with later values; `+` keeps the left-hand array’s values on key collisions.',
+  'Can an arrow function in PHP modify a variable in the outer scope?':
+    'No—PHP arrow functions (`fn() => ...`) always capture outer variables by value. Use a full `function () use (&$var) {}` closure to mutate an outer variable.',
+  'What is the `mixed` vs `never` return type in PHP 8?':
+    '`mixed` accepts any type (equivalent to `object|resource|array|string|int|float|bool|null`), while `never` means the function always `throw`s or `exit`s and never returns.',
+  'Why is $_POST empty when a client sends application/json?':
+    'PHP only populates `$_POST` for `application/x-www-form-urlencoded` and `multipart/form-data`. For JSON, read `file_get_contents("php://input")` and `json_decode()`.',
+  'Why is PHP_SELF dangerous if echoed unescaped in a form action?':
+    'An attacker can append `/"><script>...</script>` to the URL, injecting XSS via `$_SERVER["PHP_SELF"]`. Always escape with `htmlspecialchars()` or omit `action` for self-submit.',
+  'Why does session_regenerate_id(true) prevent session fixation?':
+    'It issues a brand-new random `PHPSESSID` and deletes the old session file, invalidating any session ID an attacker may have planted before login.',
+  'Why use Redis instead of default file sessions when scaling across multiple servers?':
+    'Local `/tmp` session files only exist on one web server; a load balancer routing the next request to Server B would log the user out unless sessions live in shared Redis.',
+  'What is the difference between `self::` and `static::` (late static binding) in PHP?':
+    '`self::` resolves to the class where the method is defined; `static::` resolves to the runtime subclass that was actually called.',
+  'Why mark concrete service classes `final`?':
+    'Marking leaf classes `final` prevents fragile deep inheritance hierarchies and encourages composition via interfaces.',
+  'What is the difference between composer install and composer update?':
+    '`composer install` installs exact versions from `composer.lock`; `composer update` resolves newer versions matching `composer.json` and rewrites `composer.lock`.',
+  'Why do libraries avoid committing composer.lock while applications commit it?':
+    'Applications need reproducible deploys; libraries must remain compatible across whatever versions downstream apps resolve.',
+  'What is the difference between LogicException and RuntimeException in PHP?':
+    '`LogicException` indicates a programmer bug (bad argument, invalid state) that should be fixed in code; `RuntimeException` represents an external runtime failure (network timeout, disk full).',
+  'Why is the @ error suppression operator discouraged?':
+    '`@` hides real failures, makes debugging painful, and in older PHP versions temporarily altered `error_reporting` on every call.',
+  'What is the difference between bindParam() and bindValue() in PDO?':
+    '`bindValue()` binds the value immediately when called; `bindParam()` binds a variable by reference, reading its value only when `execute()` runs (useful in loops).',
+  'Can prepared statements parameterize table or column names?':
+    'No—SQL parameters only bind data values, never identifiers. To allow dynamic `ORDER BY` columns safely, whitelist allowed column names in PHP first.',
+  'How does `match` differ from `switch` in PHP 8?':
+    '`match` uses strict `===`, returns a value, has no fall-through `break` bugs, and throws `UnhandledMatchError` if no arm matches.',
+  'What does `readonly class` enforce in PHP 8.2+?':
+    'Every declared property in the class is automatically `readonly` and dynamic properties are forbidden, making immutable DTOs concise.',
+  'How do you calculate the right pm.max_children for a server?':
+    'Divide available RAM (after OS/DB/Redis) by the average memory per PHP-FPM worker (typically 30–60 MB), e.g. 2 GB / 50 MB = ~40 workers.',
+  'Why do long-running PHP processes like Laravel Octane change memory rules?':
+    'Workers stay booted across thousands of requests instead of resetting after each one, so static arrays or singletons holding request/user state will leak memory and cross-contaminate users.',
+  'What is the difference between register() and boot() in a Service Provider?':
+    '`register()` is only for binding things into the Service Container (other providers may not be registered yet). `boot()` runs after ALL providers are registered, so you can safely resolve services, register listeners, or view composers.',
+  'What is the difference between `with()` and `load()`?':
+    '`with()` eager-loads relations as part of the initial query builder; `load()` eager-loads relations onto an already-fetched Eloquent Collection.',
+  'What HTTP status code does Laravel return when FormRequest validation fails on an API request?':
+    '`422 Unprocessable Entity` with a JSON `errors` object keyed by field name.',
+  'What is the difference between `lockForUpdate()` and `sharedLock()`?':
+    '`lockForUpdate()` (`SELECT ... FOR UPDATE`) blocks other transactions from both reading-with-lock and modifying the row; `sharedLock()` (`LOCK IN SHARE MODE`) allows concurrent reads but blocks writes.',
+  'Why does applying a function like `WHERE YEAR(created_at) = 2026` break index usage?':
+    'The B-Tree index stores raw `created_at` timestamps, not computed `YEAR()` values, so MySQL must compute `YEAR()` for every row (full scan). Rewrite as a range `>= "2026-01-01" AND < "2027-01-01"`.',
+  'What UI trade-off does cursor pagination have vs numbered pages?':
+    'Cursor pagination supports fast Next/Previous and infinite scroll, but cannot jump directly to arbitrary page numbers like "Page 14" without an offset.',
+  'What is the difference between a dirty read, non-repeatable read, and phantom read?':
+    'Dirty read: reading uncommitted data. Non-repeatable read: re-reading a row sees updated committed values. Phantom read: re-running a range query sees newly inserted matching rows.',
+  'Why is `DENSE_RANK()` better than `ROW_NUMBER()` for "2nd highest salary"?':
+    'If two employees tie for the highest salary ($100k), `ROW_NUMBER()` assigns them 1 and 2 (returning $100k as 2nd!), whereas `DENSE_RANK()` assigns both rank 1 and the next distinct salary rank 2.',
 };
 
 export function resolveFollowUpAnswer(
