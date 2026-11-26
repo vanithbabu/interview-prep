@@ -129,30 +129,34 @@ export default function TopicDetailScreen() {
 
   return (
     <ScreenContainer>
-      <View style={styles.topRow}>
-        <IconButton
-          icon="arrow-left"
-          onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))}
-          accessibilityLabel="Go back"
-        />
-        <View style={styles.titleBlock}>
-          <View style={styles.metaRow}>
-            <DifficultyBadge level={displayLevel} />
-            <Text variant="labelSmall" style={{ color: theme.colors.onSurfaceVariant }}>
-              ~{displayMinutes} min
-            </Text>
-          </View>
-          <Text variant="titleLarge" style={{ color: theme.colors.onBackground, fontWeight: '800' }}>
-            {displayTitle}
+      <View style={styles.headerWrapper}>
+        <View style={styles.navBar}>
+          <IconButton
+            icon="arrow-left"
+            style={styles.backBtn}
+            onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))}
+            accessibilityLabel="Go back"
+          />
+          <DifficultyBadge level={displayLevel} />
+          <Text variant="labelMedium" style={{ color: theme.colors.onSurfaceVariant }}>
+            • ~{displayMinutes} min
           </Text>
         </View>
-        <Button
-          mode={isTopicCompleted ? 'contained' : 'outlined'}
-          compact
-          onPress={handleToggleTopicComplete}
-        >
-          {isTopicCompleted ? 'Done' : 'Complete'}
-        </Button>
+
+        <Text variant="headlineSmall" style={{ color: theme.colors.onBackground, fontWeight: '800' }}>
+          {displayTitle}
+        </Text>
+
+        <View style={styles.actionRow}>
+          <Button
+            mode={isTopicCompleted ? 'contained' : 'contained-tonal'}
+            compact
+            icon={isTopicCompleted ? 'check-circle' : 'check-circle-outline'}
+            onPress={handleToggleTopicComplete}
+          >
+            {isTopicCompleted ? 'Topic Completed' : 'Mark Topic Complete'}
+          </Button>
+        </View>
       </View>
 
       {error ? <ErrorBanner message={error} onRetry={loadLesson} /> : null}
@@ -188,21 +192,23 @@ export default function TopicDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  topRow: {
+  headerWrapper: {
+    marginBottom: spacing.md,
+    gap: spacing.xs,
+  },
+  navBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.md,
     marginLeft: -spacing.sm,
     gap: spacing.xs,
   },
-  titleBlock: {
-    flex: 1,
-    gap: 4,
+  backBtn: {
+    margin: 0,
   },
-  metaRow: {
+  actionRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
+    marginTop: 2,
   },
   tabs: {
     marginBottom: spacing.md,
