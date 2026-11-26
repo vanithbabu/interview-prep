@@ -1,6 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { Button, Surface, Text } from 'react-native-paper';
 
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
@@ -40,6 +40,11 @@ function NumberedHeading({
 
 export function TopicLessonCard({ lesson }: TopicLessonCardProps) {
   const { theme } = useAppTheme();
+  const [expandedByIdx, setExpandedByIdx] = useState<Record<number, boolean>>({});
+
+  const toggleAnswer = (idx: number) => {
+    setExpandedByIdx((prev) => ({ ...prev, [idx]: !prev[idx] }));
+  };
 
   return (
     <LiquidCard accentColor={theme.colors.primary} style={styles.card}>
@@ -130,15 +135,65 @@ export function TopicLessonCard({ lesson }: TopicLessonCardProps) {
         bg={theme.colors.primaryContainer}
       />
       <View style={styles.followUpList}>
-        {lesson.followUpQuestions.map((fq, idx) => (
-          <Text
-            key={idx}
-            variant="bodyMedium"
-            style={[styles.bullet, { color: theme.colors.onSurfaceVariant }]}
-          >
-            • {fq}
-          </Text>
-        ))}
+        {lesson.followUpQuestions.map((fq, idx) => {
+          const answer = lesson.followUpAnswers?.[idx]?.answer;
+          const isExpanded = Boolean(expandedByIdx[idx]);
+
+          return (
+            <Surface
+              key={idx}
+              elevation={0}
+              style={[
+                styles.followUpCard,
+                {
+                  backgroundColor: theme.colors.surfaceVariant,
+                  borderColor: theme.colors.outline,
+                },
+              ]}
+            >
+              <Text
+                variant="bodyMedium"
+                style={[styles.bullet, { color: theme.colors.onSurface, fontWeight: '600' }]}
+              >
+                {idx + 1}. {fq}
+              </Text>
+
+              {answer ? (
+                <>
+                  <View style={styles.followUpActions}>
+                    <Button
+                      mode="text"
+                      compact
+                      icon={isExpanded ? 'chevron-up' : 'chevron-down'}
+                      onPress={() => toggleAnswer(idx)}
+                    >
+                      {isExpanded ? 'Hide Answer' : 'Show Answer'}
+                    </Button>
+                  </View>
+
+                  {isExpanded ? (
+                    <View
+                      style={[
+                        styles.aiAnswerBox,
+                        { backgroundColor: theme.colors.surface, borderColor: theme.colors.outline },
+                      ]}
+                    >
+                      <Text
+                        variant="labelSmall"
+                        style={{ color: theme.colors.primary, fontWeight: '700', marginBottom: 4 }}
+                      >
+                        ANSWER
+                      </Text>
+                      <Text variant="bodySmall" style={{ color: theme.colors.onSurface, lineHeight: 20 }}>
+                        {answer}
+                      </Text>
+                    </View>
+                  ) : null}
+                </>
+              ) : null}
+            </Surface>
+          );
+        })}
       </View>
     </LiquidCard>
   );
@@ -189,7 +244,23 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
   },
   followUpList: {
-    gap: 4,
+    gap: spacing.sm,
+    marginTop: spacing.xs,
+  },
+  followUpCard: {
+    padding: spacing.sm + 2,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    gap: spacing.xs,
+  },
+  followUpActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  aiAnswerBox: {
+    padding: spacing.sm,
+    borderRadius: radius.sm,
+    borderWidth: 1,
   },
   bullet: {
     lineHeight: 22,

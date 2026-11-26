@@ -22,6 +22,7 @@ export interface TopicLesson {
   codeExamples: TopicLessonCodeExample[];
   interviewSpeakingAnswer: string;
   followUpQuestions: string[];
+  followUpAnswers?: Array<{ question: string; answer: string }>;
 }
 
 export const TOPIC_LESSONS: Record<string, TopicLesson> = {

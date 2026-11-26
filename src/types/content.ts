@@ -140,4 +140,5 @@ export interface TopicLesson {
   codeExamples: TopicLessonCodeExample[];
   interviewSpeakingAnswer: string;
   followUpQuestions: string[];
+  followUpAnswers?: Array<{ question: string; answer: string }>;
 }

@@ -43,3 +43,25 @@ export async function submitAICoachTurn(
   const raw: unknown = await response.json();
   return coachResponseSchema.parse(raw);
 }
+
+export async function getFollowUpLLMAnswer(params: {
+  topicId: string;
+  categoryId: AICoachTurnRequest['categoryId'];
+  categoryName: string;
+  level: AICoachTurnRequest['level'];
+  question: string;
+}): Promise<string> {
+  const result = await submitAICoachTurn({
+    sessionId: `followup-${params.topicId}-${Date.now()}`,
+    categoryId: params.categoryId,
+    role: `${params.categoryName} Developer`,
+    level: params.level,
+    questionIndex: 0,
+    currentQuestion: params.question,
+    candidateAnswer:
+      'Please provide a concise, clear, interview-ready explanation with a practical example.',
+    history: [],
+  });
+
+  return result.evaluation.betterAnswer;
+}

@@ -79,6 +79,14 @@ const topicLessonSchema = z.object({
   ),
   interviewSpeakingAnswer: z.string(),
   followUpQuestions: z.array(z.string()),
+  followUpAnswers: z
+    .array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      })
+    )
+    .optional(),
 });
 
 export async function fetchBootstrapContent(): Promise<{

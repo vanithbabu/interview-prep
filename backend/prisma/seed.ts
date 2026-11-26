@@ -65,7 +65,7 @@ async function main() {
           whyWeUseIt: lesson?.realWorldExample ?? null,
           howItWorksInternally: lesson?.interviewSpeakingAnswer ?? null,
           syntaxVariationsJson: (lesson?.codeExamples ?? undefined) as unknown as Prisma.InputJsonValue | undefined,
-          interviewQuestionsJson: (lesson?.followUpQuestions ?? undefined) as unknown as Prisma.InputJsonValue | undefined,
+          interviewQuestionsJson: (lesson?.followUpAnswers ?? lesson?.followUpQuestions ?? undefined) as unknown as Prisma.InputJsonValue | undefined,
         },
         create: {
           id: topic.id,
@@ -80,7 +80,7 @@ async function main() {
           whyWeUseIt: lesson?.realWorldExample ?? null,
           howItWorksInternally: lesson?.interviewSpeakingAnswer ?? null,
           syntaxVariationsJson: (lesson?.codeExamples ?? undefined) as unknown as Prisma.InputJsonValue | undefined,
-          interviewQuestionsJson: (lesson?.followUpQuestions ?? undefined) as unknown as Prisma.InputJsonValue | undefined,
+          interviewQuestionsJson: (lesson?.followUpAnswers ?? lesson?.followUpQuestions ?? undefined) as unknown as Prisma.InputJsonValue | undefined,
         },
       });
 

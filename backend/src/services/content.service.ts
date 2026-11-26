@@ -4,6 +4,7 @@ import { env } from '../config/env.js';
 import { prisma } from '../config/prisma.js';
 import { CATEGORIES_FEED, type BackendCategoryMeta } from '../data/categoriesFeed.js';
 import { ALL_QUESTIONS_FEED, type BackendQuestionFeed } from '../data/questionsFeed.js';
+import { resolveFollowUpAnswer } from '../data/followUpAnswers.js';
 import { getTopicLessonById, type TopicLesson } from '../data/topicLessonsFeed.js';
 
 const generatedLessonSchema = z.object({
@@ -237,17 +238,30 @@ export function getDynamicQuestionById(id: string): BackendQuestionFeed | undefi
   return ALL_QUESTIONS_FEED.find((q) => q.id === id);
 }
 
+function withFollowUpAnswers(lesson: TopicLesson): TopicLesson {
+  if (lesson.followUpAnswers && lesson.followUpAnswers.length > 0) {
+    return lesson;
+  }
+  return {
+    ...lesson,
+    followUpAnswers: lesson.followUpQuestions.map((question) => ({
+      question,
+      answer: resolveFollowUpAnswer(question, lesson.title, lesson.categoryName),
+    })),
+  };
+}
+
 export function getDynamicTopicLesson(id: string): TopicLesson | undefined {
   const cached = generatedCache.get(id);
-  if (cached) return cached;
+  if (cached) return withFollowUpAnswers(cached);
 
   const exact = getTopicLessonById(id);
-  if (exact) return exact;
+  if (exact) return withFollowUpAnswers(exact);
 
   for (const cat of CATEGORIES_FEED) {
     const summary = cat.topics.find((t) => t.id === id);
     if (summary) {
-      return {
+      return withFollowUpAnswers({
         id: summary.id,
         categoryId: summary.categoryId,
         categoryName: cat.name,
@@ -270,7 +284,7 @@ export function getDynamicTopicLesson(id: string): TopicLesson | undefined {
           `Why do we use ${summary.title}?`,
           `What are common mistakes with ${summary.title}?`,
         ],
-      };
+      });
     }
   }
   return undefined;
