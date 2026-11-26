@@ -1,6 +1,6 @@
 import type { BackendTopicSummary } from './categoriesFeed.js';
 
-type TechId = 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
+type TechId = 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'express' | 'ai' | 'typescript';
 type Level = 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'coding';
 
 function topic(
@@ -316,4 +316,34 @@ export const MYSQL_TOPICS: BackendTopicSummary[] = [
   topic('mysql', 'mysql-fulltext-json', '18. JSON Columns & Full-Text Search', 'expert', 'Generated columns + indexes on JSON, and FULLTEXT indexes.', 35),
   topic('mysql', 'mysql-query-tuning', '19. Slow Query Log & Index Tuning', 'expert', 'Covering indexes, avoiding functions on indexed columns, and UNION ALL.', 40),
   topic('mysql', 'mysql-coding-scenarios', '20. SQL Interview Query Challenges', 'coding', 'Top-N per group, 2nd highest salary, gaps/islands, and deduplication.', 50),
+];
+
+export const EXPRESS_TOPICS: BackendTopicSummary[] = [
+  // Level 1 – Beginner (1–5)
+  topic('express', 'express-fundamentals-setup', '1. Node.js & Express Fundamentals', 'beginner', 'Event-driven HTTP server, express(), app.listen, and Express 5 async.', 25),
+  topic('express', 'express-routing-params', '2. Routing, Params & Query Strings', 'beginner', 'HTTP methods, req.params, req.query, and express.Router modularization.', 30),
+  topic('express', 'express-req-res-body', '3. Request & Response Lifecycle', 'beginner', 'express.json(), status codes, headers, cookies, and streaming responses.', 30),
+  topic('express', 'express-middleware-pipeline', '4. Middleware & Execution Order', 'beginner', 'req, res, next(), application vs router middleware, and short-circuiting.', 35),
+  topic('express', 'express-error-handling', '5. Error-Handling Middleware & Async', 'beginner', '4-arg (err, req, res, next), Express 5 promise rejections, and AppError.', 35),
+
+  // Level 2 – Intermediate (6–10)
+  topic('express', 'express-mvc-architecture', '6. MVC, Controllers & Services', 'intermediate', 'Thin controllers, service layer, repository pattern, and clean folders.', 35),
+  topic('express', 'express-validation-zod', '7. Input Validation & Sanitization', 'intermediate', 'Zod/Joi request validation middleware for body, query, and params.', 30),
+  topic('express', 'express-db-mysql-mongo', '8. MySQL/Postgres & MongoDB Pooling', 'intermediate', 'Connection pools, prepared queries, Prisma/Knex, and avoiding leaks.', 40),
+  topic('express', 'express-auth-jwt', '9. Authentication, Hashing & JWT', 'intermediate', 'scrypt/bcrypt, access vs refresh tokens, HttpOnly cookies, and rotation.', 40),
+  topic('express', 'express-rbac-authorization', '10. Authorization & RBAC', 'intermediate', 'Role/permission middleware, ownership checks, and tenant isolation.', 35),
+
+  // Level 3 – Advanced (11–15)
+  topic('express', 'express-uploads-multer', '11. File Uploads & Multer Streaming', 'advanced', 'Memory vs disk vs S3 streams, MIME magic bytes, and size limits.', 35),
+  topic('express', 'express-security-cors-helmet', '12. Security: Helmet, CORS & Rate Limit', 'advanced', 'CSP headers, strict CORS origins, Redis rate limiting, and HPP.', 40),
+  topic('express', 'express-pagination-filtering', '13. REST Pagination, Filtering & Sort', 'advanced', 'Cursor vs offset pagination, whitelisted sort fields, and API envelopes.', 35),
+  topic('express', 'express-logging-observability', '14. Structured Logging & Tracing', 'advanced', 'Pino/Winston JSON logs, request correlation IDs, and health checks.', 35),
+  topic('express', 'express-testing-supertest', '15. Integration Testing with Supertest', 'advanced', 'Testing Express apps without binding ports, mocking external APIs.', 35),
+
+  // Level 4 – Expert & Coding (16–20)
+  topic('express', 'express-caching-redis', '16. Redis Caching & Background Jobs', 'expert', 'Cache-aside pattern, BullMQ queues, and offloading slow work.', 40),
+  topic('express', 'express-transactions-idempotency', '17. DB Transactions & Idempotency', 'expert', 'Idempotency-Key headers, preventing duplicate payments, and rollbacks.', 40),
+  topic('express', 'express-websockets-realtime', '18. WebSockets, SSE & Event Streams', 'expert', 'Server-Sent Events vs Socket.io, auth handshakes, and Redis pub/sub.', 40),
+  topic('express', 'express-graceful-scaling', '19. Graceful Shutdown & Clustering', 'expert', 'SIGTERM handling, draining connections, PM2/containers, and memory leaks.', 40),
+  topic('express', 'express-coding-scenarios', '20. Express.js Interview Scenarios', 'coding', 'Handling 10k concurrent requests, custom async middleware, and API resilience.', 50),
 ];

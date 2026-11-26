@@ -1,6 +1,7 @@
 import { JS_50_TOPICS } from './jsRoadmap50.js';
 import {
   AI_TOPICS,
+  EXPRESS_TOPICS,
   LARAVEL_TOPICS,
   MYSQL_TOPICS,
   NEXTJS_TOPICS,
@@ -12,7 +13,7 @@ import {
 
 export interface BackendTopicSummary {
   id: string;
-  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
+  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'express' | 'ai' | 'typescript';
   slug: string;
   title: string;
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'coding';
@@ -22,7 +23,7 @@ export interface BackendTopicSummary {
 }
 
 export interface BackendCategoryMeta {
-  id: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
+  id: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'express' | 'ai' | 'typescript';
   name: string;
   shortDescription: string;
   icon: string;
@@ -86,6 +87,14 @@ export const CATEGORIES_FEED: BackendCategoryMeta[] = [
     icon: 'database',
     accentColor: '#0EA5E9',
     topics: MYSQL_TOPICS,
+  },
+  {
+    id: 'express',
+    name: 'Express.js',
+    shortDescription: '20-module roadmap covering Routing, Middleware, JWT, MVC, Redis, Security & Scaling.',
+    icon: 'server-network',
+    accentColor: '#64748B',
+    topics: EXPRESS_TOPICS,
   },
   {
     id: 'ai',

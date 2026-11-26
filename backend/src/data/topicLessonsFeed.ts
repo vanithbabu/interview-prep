@@ -1,7 +1,10 @@
+import { EXPRESS_LESSONS } from './expressLessons.js';
 import { JS_LESSONS_PART_1 } from './jsLessonsPart1.js';
 import { JS_LESSONS_PART_2 } from './jsLessonsPart2.js';
 import { PHP_LARAVEL_MYSQL_LESSONS } from './phpLaravelMysqlLessons.js';
+import { REACT_NEXT_LESSONS } from './reactNextLessons.js';
 import { EXTRA_TOPIC_LESSONS } from './topicLessonsExtra.js';
+import { TS_AI_LESSONS } from './tsAiLessons.js';
 import { WP_LESSONS } from './wpLessons.js';
 
 export interface TopicLessonCodeExample {
@@ -13,7 +16,7 @@ export interface TopicLessonCodeExample {
 
 export interface TopicLesson {
   id: string;
-  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
+  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'express' | 'ai' | 'typescript';
   categoryName: string;
   title: string;
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'coding';
@@ -354,6 +357,9 @@ export function getTopicLessonById(id: string): TopicLesson | undefined {
   return (
     WP_LESSONS[id] ??
     PHP_LARAVEL_MYSQL_LESSONS[id] ??
+    EXPRESS_LESSONS[id] ??
+    REACT_NEXT_LESSONS[id] ??
+    TS_AI_LESSONS[id] ??
     TOPIC_LESSONS[id] ??
     EXTRA_TOPIC_LESSONS[id] ??
     JS_LESSONS_PART_1[id] ??

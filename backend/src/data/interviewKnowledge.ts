@@ -6,6 +6,7 @@ export type KnowledgeCategoryId =
   | 'php'
   | 'laravel'
   | 'mysql'
+  | 'express'
   | 'ai'
   | 'typescript';
 

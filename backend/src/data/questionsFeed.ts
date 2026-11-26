@@ -1,6 +1,6 @@
 export interface BackendQuestionFeed {
   id: string;
-  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'ai' | 'typescript';
+  categoryId: 'javascript' | 'react' | 'nextjs' | 'wordpress' | 'php' | 'laravel' | 'mysql' | 'express' | 'ai' | 'typescript';
   topicId?: string;
   title: string;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
@@ -491,6 +491,61 @@ export const ALL_QUESTIONS_FEED: BackendQuestionFeed[] = [
     interviewerExpectations: ['Explain LEFT JOIN ON vs WHERE.', 'Show CTE + Window Function pattern.'],
     keyConcepts: ['LEFT JOIN', 'HAVING', 'CTE', 'ROW_NUMBER', 'DENSE_RANK'],
     tags: ['mysql', 'sql', 'queries'],
+  },
+  // Express.js Questions
+  {
+    id: 'express-q-middleware-error',
+    categoryId: 'express',
+    topicId: 'express-middleware-pipeline',
+    title: 'How do Express Middleware and 4-argument Error-Handling Middleware work?',
+    difficulty: 'beginner',
+    shortAnswer:
+      'Middleware `(req, res, next)` runs sequentially between request and response; `next()` advances, sending `res` stops, and `next(err)` jumps to 4-arg `(err, req, res, next)` error middleware mounted last.',
+    humanInterviewAnswer:
+      'Middleware is a function that runs between receiving a request and sending a response—we use it for auth, logging, and Zod validation. Calling `next()` passes control forward, while `next(err)` skips straight to the 4-argument `(err, req, res, next)` error handler at the bottom of `app.ts`. In Express 5, rejected async route promises go there automatically.',
+    detailedExplanation:
+      'Execution order follows registration order (`app.use()`). Static routes like `/users/me` must precede `/users/:id`. Operational `AppError`s map to 4xx statuses while unexpected errors return a safe 500 without leaking stack traces.',
+    practicalExample: 'Using `requireAuth` middleware to verify a JWT and attach `req.user` before protected controllers run.',
+    followUpQuestions: ['Why does Express require all 4 parameters `(err, req, res, next)` even if `next` is unused?'],
+    interviewerExpectations: ['Explain req, res, next, and 4-arg error middleware.', 'Mention async error forwarding.'],
+    keyConcepts: ['middleware', 'next(err)', '4-arg error handler', 'execution order'],
+    tags: ['express', 'middleware', 'errors'],
+  },
+  {
+    id: 'express-q-security-pooling',
+    categoryId: 'express',
+    topicId: 'express-security-cors-helmet',
+    title: 'How do you secure an Express API and manage database connection pools in production?',
+    difficulty: 'intermediate',
+    shortAnswer:
+      'Use `helmet()`, strict CORS origins, Redis rate limiting with `trust proxy`, Zod validation, and a single shared DB connection pool (always releasing manual connections in `finally`).',
+    humanInterviewAnswer:
+      'For security I combine `helmet()`, a strict CORS allowlist (never `*` with credentials), Zod validation middleware that strips unknown keys, and rate limiting with `app.set("trust proxy", 1)` behind Nginx/Render. For the database I share one connection pool across the app and always release transaction connections in `finally` so traffic spikes never leak connections.',
+    detailedExplanation:
+      'Opening a fresh DB connection per request wastes TCP/TLS/auth overhead and exhausts `max_connections`. Pooling reuses connections, and `Idempotency-Key` headers protect critical POSTs against mobile retries.',
+    practicalExample: 'Putting `rateLimit` on `/api/auth` with `trust proxy` enabled so each client IP is limited independently.',
+    followUpQuestions: ['What happens if you forget `conn.release()` in a `catch` block?'],
+    interviewerExpectations: ['Name helmet, strict CORS, rate limit + trust proxy, Zod.', 'Explain DB pooling and leak prevention.'],
+    keyConcepts: ['helmet', 'CORS', 'rate limiting', 'trust proxy', 'connection pool'],
+    tags: ['express', 'security', 'database'],
+  },
+  {
+    id: 'express-q-scaling-10k',
+    categoryId: 'express',
+    topicId: 'express-coding-scenarios',
+    title: 'How would you scale an Express.js API to handle 10,000 concurrent requests?',
+    difficulty: 'advanced',
+    shortAnswer:
+      'Keep handlers non-blocking, cache hot reads in Redis, bound DB pools, add `AbortSignal.timeout()` on upstream calls, offload slow tasks to BullMQ, and scale stateless replicas behind a load balancer.',
+    humanInterviewAnswer:
+      'Because Node runs on a single event loop, one synchronous CPU task blocks everyone—so I keep all I/O async and offload heavy emails/PDFs to BullMQ workers. I cache hot reads in Redis, put `AbortSignal.timeout()` on external API calls so slow upstreams don’t pile up sockets, handle `SIGTERM` graceful shutdown, and run multiple stateless Express instances behind a load balancer.',
+    detailedExplanation:
+      'Scaling Express requires horizontal statelessness (no local memory sessions), bounded connection pools, Redis Pub/Sub for WebSockets, and `server.close()` draining on `SIGTERM`.',
+    practicalExample: 'Returning `202 Accepted` immediately while a BullMQ worker generates a report asynchronously.',
+    followUpQuestions: ['Why can increasing DB `connectionLimit` to 500 actually make throughput worse?'],
+    interviewerExpectations: ['Protect single-threaded event loop.', 'Use Redis, BullMQ, timeouts, graceful shutdown, horizontal scaling.'],
+    keyConcepts: ['event loop', 'Redis cache', 'BullMQ', 'graceful shutdown', 'horizontal scaling'],
+    tags: ['express', 'scaling', 'architecture'],
   },
   {
     id: 'ai-q-rag',

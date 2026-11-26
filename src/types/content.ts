@@ -6,6 +6,7 @@ export type TechnologyId =
   | 'php'
   | 'laravel'
   | 'mysql'
+  | 'express'
   | 'ai'
   | 'typescript';
 

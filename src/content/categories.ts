@@ -342,6 +342,25 @@ export const CATEGORIES: CategoryMeta[] = [
       },
     ],
   },
+  {
+    id: 'express',
+    name: 'Express.js',
+    shortDescription: 'Routing, Middleware, JWT, MVC, Redis, Security & Scaling.',
+    icon: 'server-network',
+    accentColor: '#64748B',
+    topics: [
+      {
+        id: 'express-fundamentals-setup',
+        categoryId: 'express',
+        slug: 'express-fundamentals-setup',
+        title: '1. Node.js & Express Fundamentals',
+        level: 'beginner',
+        estimatedMinutes: 25,
+        description: 'Event-driven HTTP server, express(), app.listen, and Express 5 async.',
+        exampleCount: 50,
+      },
+    ],
+  },
 ];
 
 export function getCategoryById(id: TechnologyId): CategoryMeta | undefined {

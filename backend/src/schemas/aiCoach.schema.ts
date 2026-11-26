@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const coachTurnRequestSchema = z.object({
   sessionId: z.string().min(3).max(120),
   categoryId: z
-    .enum(['all', 'javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'ai', 'typescript'])
+    .enum(['all', 'javascript', 'react', 'nextjs', 'wordpress', 'php', 'laravel', 'mysql', 'express', 'ai', 'typescript'])
     .optional()
     .default('all'),
   role: z.string().min(2).max(80),

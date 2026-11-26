@@ -16,6 +16,7 @@ const technologyIdSchema = z.enum([
   'php',
   'laravel',
   'mysql',
+  'express',
   'ai',
   'typescript',
 ]);
