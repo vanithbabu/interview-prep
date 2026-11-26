@@ -2,6 +2,36 @@ import type { InterviewQuestion } from '@/types/content';
 
 export const JAVASCRIPT_QUESTIONS: InterviewQuestion[] = [
   {
+    id: 'js-q-introduction',
+    categoryId: 'javascript',
+    topicId: 'js-introduction',
+    title: 'What is JavaScript and how is it executed?',
+    difficulty: 'beginner',
+    shortAnswer:
+      'JavaScript is a high-level, single-threaded, dynamically typed language executed by JS engines like V8 via parsing, JIT compilation, and an event-driven runtime.',
+    humanInterviewAnswer:
+      'JavaScript is a single-threaded, dynamically typed language that powers interactive web UIs, mobile apps, and Node.js backends. Under the hood, a JS engine like V8 parses your code into an AST, compiles hot paths with JIT, and runs synchronous code on one call stack while delegating async work to the event loop.',
+    detailedExplanation:
+      'JavaScript engines (V8, SpiderMonkey, JavaScriptCore) combine an interpreter and a Just-In-Time (JIT) compiler. Because JS has one main call stack, long synchronous tasks block the UI, while I/O and timers are offloaded to host APIs (browser Web APIs or libuv in Node.js) and queued back via microtasks and macrotasks.',
+    practicalExample:
+      'When a user taps a Like button, JS updates the UI immediately on the main thread while `fetch()` runs asynchronously in the background.',
+    codeExample: {
+      language: 'javascript',
+      code: `let status = 'Loading';\nconsole.log(typeof status);\nstatus = 200;\nconsole.log(typeof status);`,
+      expectedOutput: 'string\nnumber',
+    },
+    followUpQuestions: [
+      'What does single-threaded mean?',
+      'How does JS run outside the browser?',
+    ],
+    interviewerExpectations: [
+      'Mention single-threaded call stack and dynamic typing.',
+      'Briefly explain JS engine (V8) + host runtime (Browser / Node.js).',
+    ],
+    keyConcepts: ['single-threaded', 'dynamic typing', 'V8', 'event loop', 'JIT'],
+    tags: ['introduction', 'fundamentals', 'runtime'],
+  },
+  {
     id: 'js-q-var-let-const',
     categoryId: 'javascript',
     topicId: 'js-fundamentals',

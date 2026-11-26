@@ -5,6 +5,7 @@ import { Button, Surface, Text } from 'react-native-paper';
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
 import { LiquidCard } from '@/components/ui/LiquidCard';
+import { resolveFollowUpAnswer } from '@/content/followUpAnswers';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { radius, spacing } from '@/theme/spacing';
 import type { TopicLesson } from '@/types/content';
@@ -136,7 +137,9 @@ export function TopicLessonCard({ lesson }: TopicLessonCardProps) {
       />
       <View style={styles.followUpList}>
         {lesson.followUpQuestions.map((fq, idx) => {
-          const answer = lesson.followUpAnswers?.[idx]?.answer;
+          const answer =
+            lesson.followUpAnswers?.[idx]?.answer ??
+            resolveFollowUpAnswer(fq, lesson.title, lesson.categoryName);
           const isExpanded = Boolean(expandedByIdx[idx]);
 
           return (
