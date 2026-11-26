@@ -27,13 +27,13 @@ export const ALL_QUESTIONS_FEED: BackendQuestionFeed[] = [
     title: 'What is JavaScript and how is it executed?',
     difficulty: 'beginner',
     shortAnswer:
-      'JavaScript is a high-level, single-threaded, dynamically typed language executed by JS engines like V8 via parsing, JIT compilation, and an event-driven runtime.',
+      'JavaScript is a high-level, single-threaded, dynamically typed, garbage-collected language with first-class functions, an event-driven non-blocking runtime, and engines like V8 (Chrome/Node) that JIT-compile it to machine code.',
     humanInterviewAnswer:
-      'JavaScript is a single-threaded, dynamically typed language that powers interactive web UIs, mobile apps, and Node.js backends. Under the hood, a JS engine like V8 parses your code into an AST, compiles hot paths with JIT, and runs synchronous code on one call stack while delegating async work to the event loop.',
+      'JavaScript started as a small scripting language for Netscape browsers in 1995, but today it runs everywhere—browsers, servers via Node.js, mobile apps with React Native, even IoT devices. It is single-threaded, meaning one call stack, but it handles concurrency through an event loop that queues callbacks. The V8 engine compiles JS to optimised machine code at runtime using JIT compilation, which is why modern JS is surprisingly fast despite being dynamically typed.',
     detailedExplanation:
-      'JavaScript engines (V8, SpiderMonkey, JavaScriptCore) combine an interpreter and a Just-In-Time (JIT) compiler. Because JS has one main call stack, long synchronous tasks block the UI, while I/O and timers are offloaded to host APIs (browser Web APIs or libuv in Node.js) and queued back via microtasks and macrotasks.',
+      'JavaScript engines parse source into an AST, generate bytecode, and then JIT-compile hot paths. The event loop picks tasks from the macrotask queue (setTimeout, I/O) and microtask queue (Promises, queueMicrotask). First-class functions mean functions can be assigned to variables, passed as arguments, and returned from other functions—enabling closures and higher-order patterns that are foundational to the language.',
     practicalExample:
-      'When a user taps a Like button, JS updates the UI immediately on the main thread while `fetch()` runs asynchronously in the background.',
+      'When you type in a search bar, JavaScript captures each keystroke via an event listener, debounces the input using `setTimeout`, sends a `fetch` request to the server asynchronously, and updates the DOM with results—all without reloading the page.',
     codeExample: {
       language: 'javascript',
       code: `let status = 'Loading';\nconsole.log(typeof status);\nstatus = 200;\nconsole.log(typeof status);`,
@@ -42,13 +42,15 @@ export const ALL_QUESTIONS_FEED: BackendQuestionFeed[] = [
     followUpQuestions: [
       'What does single-threaded mean?',
       'How does JS run outside the browser?',
+      'What is JIT compilation?',
     ],
     interviewerExpectations: [
-      'Mention single-threaded call stack and dynamic typing.',
-      'Briefly explain JS engine (V8) + host runtime (Browser / Node.js).',
+      'Mention single-threaded + event loop for concurrency.',
+      'Explain dynamic typing with an example.',
+      'Know that Node.js brought JS to the server.',
     ],
-    keyConcepts: ['single-threaded', 'dynamic typing', 'V8', 'event loop', 'JIT'],
-    tags: ['introduction', 'fundamentals', 'runtime'],
+    keyConcepts: ['single-threaded', 'event loop', 'dynamic typing', 'JIT compilation', 'first-class functions', 'V8'],
+    tags: ['fundamentals', 'introduction', 'runtime'],
   },
   {
     id: 'js-q-var-let-const',

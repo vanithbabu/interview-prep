@@ -1,4 +1,6 @@
 export const FOLLOW_UP_ANSWERS: Record<string, string> = {
+  'What is JIT compilation?':
+    'JIT (Just-In-Time) compilation means the JavaScript engine (e.g., V8) first interprets bytecode, then detects "hot" functions that run frequently and compiles them into optimised machine code at runtime. This gives near-native speed without requiring an ahead-of-time compile step.',
   'Can you mutate properties of an object declared with `const`?':
     'Yes. `const` prevents reassigning the variable binding itself, not mutating the object properties in memory. To prevent property mutations, use `Object.freeze()` (shallow) or deep-freeze recursively.',
   'What is the Temporal Dead Zone (TDZ)?':
