@@ -1,0 +1,200 @@
+# 6 Primary Technologies Curriculum (Beginner to Advanced)
+
+Every category must have a complete Beginner-to-Advanced learning roadmap.
+
+## 1. JavaScript *(Start here first)*
+- JavaScript fundamentals
+- Variables: `var`, `let`, `const`
+- Data types and type conversion
+- Operators and expressions
+- Conditional statements
+- Loops
+- Functions and function variations
+- Arrays and array methods
+- Objects and object methods
+- Destructuring
+- Spread and rest operators
+- Scope and lexical scope
+- Hoisting
+- Closures
+- `this` keyword
+- `call`, `apply` and `bind`
+- Prototypes and inheritance
+- Classes
+- ES6+ features
+- Execution context
+- Call stack
+- Event loop
+- Microtasks and macrotasks
+- Promises
+- Async/await
+- Error handling
+- Modules
+- DOM manipulation
+- Event bubbling and capturing
+- Debouncing and throttling
+- Memory management
+- Garbage collection
+- Shallow copy and deep copy
+- `Map`, `Set`, `WeakMap` and `WeakSet`
+- Iterators and generators
+- Functional programming
+- JavaScript performance
+- Security concepts
+- Advanced coding challenges
+
+## 2. React.js
+- React fundamentals
+- JSX
+- Components
+- Props and state
+- Conditional rendering
+- Lists and keys
+- Event handling
+- Component lifecycle
+- `useState`
+- `useEffect`
+- `useRef`
+- `useMemo`
+- `useCallback`
+- `useContext`
+- `useReducer`
+- Custom hooks
+- React Router
+- Forms and validation
+- API integration
+- State management
+- Redux and Redux Toolkit
+- Zustand
+- Context API
+- React reconciliation
+- Virtual DOM
+- Fiber architecture
+- Rendering behavior
+- Performance optimization
+- Lazy loading
+- Suspense
+- Error boundaries
+- React Server Components
+- Testing
+- Security
+- React architecture
+- Senior-level interview scenarios
+
+## 3. Next.js
+- Next.js introduction
+- Project setup
+- Pages Router
+- App Router
+- File-based routing
+- Dynamic routes
+- Layouts and templates
+- Server Components
+- Client Components
+- SSR
+- SSG
+- ISR
+- CSR
+- Server Actions
+- API Routes
+- Route Handlers
+- Middleware / Proxy concepts
+- Data fetching
+- Caching and revalidation
+- Metadata and SEO
+- Image optimization
+- Font optimization
+- Authentication
+- Authorization
+- Environment variables
+- Error handling
+- Loading states
+- Streaming and Suspense
+- Deployment
+- Performance optimization
+- Next.js architecture
+- Senior-level interview questions
+
+## 4. WordPress Development
+- WordPress fundamentals
+- WordPress installation
+- WordPress architecture
+- Themes and child themes
+- Plugin development
+- Template hierarchy
+- Hooks
+- Actions and filters
+- Custom Post Types
+- Custom Taxonomies
+- Custom Fields
+- Advanced Custom Fields
+- Gutenberg blocks
+- Shortcodes
+- `WP_Query`
+- WP REST API
+- Database structure
+- `$wpdb`
+- User roles and capabilities
+- Authentication
+- WooCommerce
+- Custom WooCommerce development
+- Cron jobs
+- Caching
+- Performance optimization
+- WordPress security
+- Debugging
+- WordPress deployment
+- Headless WordPress
+- WordPress with React
+- Advanced interview scenarios
+
+## 5. Artificial Intelligence (AI)
+- AI fundamentals
+- Machine Learning basics
+- Deep Learning fundamentals
+- Generative AI
+- Large Language Models
+- Tokens and context windows
+- Prompt engineering
+- System prompts
+- AI APIs
+- OpenAI API integration
+- Structured outputs
+- Function calling and tools
+- Embeddings
+- Vector databases
+- Semantic search
+- Retrieval-Augmented Generation (RAG)
+- AI agents
+- Agent workflows
+- Memory in AI applications
+- AI application architecture
+- AI security
+- Hallucinations and evaluation
+- Building AI applications with React and Next.js
+- Practical AI projects
+- AI developer interview questions
+
+## 6. TypeScript
+- TypeScript fundamentals
+- Primitive types
+- Arrays and tuples
+- Interfaces
+- Type aliases
+- Union and intersection types
+- Enums
+- Functions
+- Generics
+- Type narrowing
+- Type guards
+- Utility types
+- Mapped types
+- Conditional types
+- `keyof` and `typeof`
+- `infer` keyword
+- Advanced generics
+- Declaration files
+- TypeScript with React
+- TypeScript with Next.js
+- API response typing
+- Advanced architecture

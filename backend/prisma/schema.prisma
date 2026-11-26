@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+model Category {
+  id               String              @id
+  name             String
+  shortDescription String
+  icon             String
+  accentColor      String
+  sortOrder        Int                 @default(0)
+  topics           Topic[]
+  questions        InterviewQuestion[]
+}
+
+model Topic {
+  id                     String         @id
+  categoryId             String
+  slug                   String
+  title                  String
+  level                  String
+  estimatedMinutes       Int
+  description            String
+  introduction           String?
+  simpleExplanation      String?
+  whyWeUseIt             String?
+  howItWorksInternally   String?
+  syntaxVariationsJson   Json?
+  realWorldUsageJson     Json?
+  commonMistakesJson     Json?
+  bestPracticesJson      Json?
+  interviewQuestionsJson Json?
+  practicalExercisesJson Json?
+  advancedUseCasesJson   Json?
+  examples               TopicExample[]
+  category               Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model TopicExample {
+  id             String @id
+  topicId        String
+  number         Int
+  title          String
+  groupTitle     String
+  concept        String
+  syntax         String
+  code           String
+  expectedOutput String
+  explanation    String
+  realWorldUsage String
+  interviewTip   String
+  topic          Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([topicId, number])
+}
+
+model InterviewQuestion {
+  id                          String   @id
+  categoryId                  String
+  topicId                     String?
+  title                       String
+  difficulty                  String
+  shortAnswer                 String
+  detailedExplanation         String
+  humanInterviewAnswer        String
+  practicalExample            String
+  codeExampleJson             Json?
+  followUpQuestionsJson       Json
+  interviewerExpectationsJson Json
+  keyConcepts                 String[]
+  tags                        String[]
+  category                    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String           @id @default(cuid())
+  email         String           @unique
+  name          String?
+  passwordHash  String
+  createdAt     DateTime         @default(now())
+  userState     UserState?
+  topicProgress TopicProgress[]
+  mockSessions  MockInterview[]
+  coachSessions AICoachSession[]
+  activities    ActivityLog[]
+}
+
+model UserState {
+  id                          String   @id @default(cuid())
+  userId                      String   @unique
+  completedTopicIds           String[]
+  completedExampleIds         String[]
+  answeredQuestionResultsJson Json     @default("{}")
+  bookmarkedQuestionIds       String[]
+  bookmarkedExampleIds        String[]
+  notesJson                   Json     @default("{}")
+  dailyGoalTarget             Int      @default(5)
+  currentStreak               Int      @default(0)
+  longestStreak               Int      @default(0)
+  lastActiveDate              String?
+  updatedAt                   DateTime @updatedAt
+  user                        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ActivityLog {
+  id           String   @id @default(cuid())
+  userId       String
+  actionType   String
+  targetId     String?
+  title        String
+  metadataJson Json?
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TopicProgress {
+  id                  String   @id @default(cuid())
+  userId              String
+  topicId             String
+  completed           Boolean  @default(false)
+  completedExampleIds String[]
+  lastExampleNumber   Int      @default(1)
+  updatedAt           DateTime @updatedAt
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+}
+
+model MockInterview {
+  id           String   @id @default(cuid())
+  userId       String
+  modeId       String
+  averageScore Float
+  resultsJson  Json
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AICoachSession {
+  id             String   @id @default(cuid())
+  userId         String
+  role           String
+  level          String
+  transcriptJson Json
+  finalReport    Json?
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
