@@ -15,8 +15,8 @@ export default function AuthScreen() {
   const { theme } = useAppTheme();
   const login = useAuthStore((s) => s.login);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('developer@interviewprep.app');
+  const [password, setPassword] = useState('Interview@2026');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

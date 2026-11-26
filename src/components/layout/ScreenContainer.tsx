@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, type ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { layout, spacing } from '@/theme/spacing';
@@ -19,6 +19,7 @@ export function ScreenContainer({
   contentStyle,
 }: ScreenContainerProps) {
   const { theme } = useAppTheme();
+  const insets = useSafeAreaInsets();
 
   const innerContent = (
     <View style={[styles.inner, contentStyle]}>{children}</View>
@@ -31,14 +32,19 @@ export function ScreenContainer({
     >
       {scrollable ? (
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: spacing.xl + insets.bottom },
+          ]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           {innerContent}
         </ScrollView>
       ) : (
-        <View style={styles.nonScrollContent}>{innerContent}</View>
+        <View style={[styles.nonScrollContent, { paddingBottom: insets.bottom }]}>
+          {innerContent}
+        </View>
       )}
     </SafeAreaView>
   );

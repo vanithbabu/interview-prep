@@ -1,7 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { radius } from '@/theme/spacing';
@@ -32,26 +33,58 @@ function TabIcon({
 
 export default function TabsLayout() {
   const { theme } = useAppTheme();
+  const insets = useSafeAreaInsets();
+  const bottomPadding = Math.max(insets.bottom, 8);
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
+        lazy: false,
+        animation: 'none',
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.outline,
           borderTopWidth: 1,
-          height: Platform.OS === 'ios' ? 86 : 68,
-          paddingBottom: Platform.OS === 'ios' ? 24 : 8,
-          paddingTop: 8,
+          height: 68 + bottomPadding,
+          paddingBottom: bottomPadding,
+          paddingTop: 6,
+        },
+        tabBarIconStyle: {
+          width: 52,
+          height: 30,
+          marginBottom: 2,
         },
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: '700',
-          marginTop: 2,
         },
+        tabBarButton: ({
+          children,
+          style,
+          onPress,
+          onLongPress,
+          accessibilityLabel,
+          accessibilityState,
+          testID,
+        }) => (
+          <Pressable
+            onPress={onPress ?? undefined}
+            onLongPress={onLongPress ?? undefined}
+            accessibilityLabel={accessibilityLabel}
+            accessibilityState={accessibilityState}
+            testID={testID}
+            android_ripple={{ color: 'transparent' }}
+            style={({ pressed }) => [
+              style,
+              pressed && { opacity: 0.72, transform: [{ scale: 0.96 }] },
+            ]}
+          >
+            {children}
+          </Pressable>
+        ),
       }}
     >
       <Tabs.Screen
@@ -140,8 +173,8 @@ export default function TabsLayout() {
 
 const styles = StyleSheet.create({
   iconPill: {
-    paddingHorizontal: 14,
-    paddingVertical: 4,
+    width: 48,
+    height: 28,
     borderRadius: radius.pill,
     alignItems: 'center',
     justifyContent: 'center',

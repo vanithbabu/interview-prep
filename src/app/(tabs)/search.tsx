@@ -188,7 +188,7 @@ export default function SearchScreen() {
             );
           })}
 
-          {topics.map((topic) => (
+          {topics.slice(0, debouncedQuery.trim() ? topics.length : 25).map((topic) => (
             <SearchResultCard
               key={topic.id}
               kind="topic"
@@ -198,6 +198,14 @@ export default function SearchScreen() {
               onPress={() => router.push(`/topic/${topic.id}`)}
             />
           ))}
+          {!debouncedQuery.trim() && topics.length > 25 ? (
+            <Text
+              variant="bodySmall"
+              style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: spacing.xs }}
+            >
+              Showing 25 of {topics.length} topics — type above to search all
+            </Text>
+          ) : null}
         </View>
       )}
     </ScreenContainer>

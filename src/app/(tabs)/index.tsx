@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -49,31 +50,69 @@ export default function DashboardScreen() {
 
   return (
     <ScreenContainer>
-      <View style={styles.topBar}>
-        <View style={styles.titleBlock}>
-          <Text variant="headlineMedium" style={{ color: theme.colors.onBackground, fontWeight: '800' }}>
-            {user ? `Hi, ${user.name}` : 'Welcome Back'}
-          </Text>
-          <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
+      <View style={styles.headerWrapper}>
+        <View style={styles.topBar}>
+          <View style={styles.titleBlock}>
+            <Text variant="labelSmall" style={{ color: theme.colors.secondary, fontWeight: '700', letterSpacing: 0.8 }}>
+              INTERVIEW PREP
+            </Text>
+            <Text
+              variant="headlineSmall"
+              numberOfLines={1}
+              style={{ color: theme.colors.onBackground, fontWeight: '800' }}
+            >
+              {user ? `Hi, ${user.name}` : 'Welcome Back'}
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.topActionsPill,
+              { backgroundColor: theme.colors.surface, borderColor: theme.colors.outline },
+            ]}
+          >
+            <IconButton
+              icon={user ? 'account-check' : 'account-circle-outline'}
+              size={19}
+              style={styles.headerIconBtn}
+              iconColor={user ? theme.colors.primary : theme.colors.onSurfaceVariant}
+              onPress={() => router.push('/auth')}
+              accessibilityLabel={user ? 'Account profile' : 'Sign in'}
+            />
+            <IconButton
+              icon={isDark ? 'weather-sunny' : 'weather-night'}
+              size={19}
+              style={styles.headerIconBtn}
+              iconColor={theme.colors.onSurfaceVariant}
+              onPress={() => setPreference(isDark ? 'light' : 'dark')}
+              accessibilityLabel="Toggle light or dark theme"
+            />
+            <IconButton
+              icon="cog-outline"
+              size={19}
+              style={styles.headerIconBtn}
+              iconColor={theme.colors.onSurfaceVariant}
+              onPress={() => router.push('/settings')}
+              accessibilityLabel="Open settings"
+            />
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.tipBanner,
+            { backgroundColor: theme.colors.surfaceVariant, borderColor: theme.colors.outline },
+          ]}
+        >
+          <MaterialCommunityIcons
+            name="lightbulb-on-outline"
+            size={16}
+            color={theme.colors.secondary}
+            style={styles.tipIcon}
+          />
+          <Text variant="bodySmall" style={[styles.tipText, { color: theme.colors.onSurfaceVariant }]}>
             {dailyTip}
           </Text>
-        </View>
-        <View style={styles.topActions}>
-          <IconButton
-            icon={user ? 'account-check' : 'account-circle-outline'}
-            onPress={() => router.push('/auth')}
-            accessibilityLabel={user ? 'Account profile' : 'Sign in'}
-          />
-          <IconButton
-            icon={isDark ? 'weather-sunny' : 'weather-night'}
-            onPress={() => setPreference(isDark ? 'light' : 'dark')}
-            accessibilityLabel="Toggle light or dark theme"
-          />
-          <IconButton
-            icon="cog-outline"
-            onPress={() => router.push('/settings')}
-            accessibilityLabel="Open settings"
-          />
         </View>
       </View>
 
@@ -202,20 +241,48 @@ export default function DashboardScreen() {
 }
 
 const styles = StyleSheet.create({
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+  headerWrapper: {
     marginBottom: spacing.md,
     gap: spacing.sm,
   },
-  topActions: {
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  topActionsPill: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderRadius: 999,
+    borderWidth: 1,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+  },
+  headerIconBtn: {
+    margin: 0,
+    width: 34,
+    height: 34,
   },
   titleBlock: {
     flex: 1,
-    gap: spacing.xs,
+    gap: 2,
+  },
+  tipBanner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: spacing.sm + 4,
+    paddingVertical: spacing.sm,
+    borderRadius: 12,
+    borderWidth: 1,
+    gap: spacing.xs + 2,
+  },
+  tipIcon: {
+    marginTop: 2,
+  },
+  tipText: {
+    flex: 1,
+    lineHeight: 18,
   },
   stack: {
     gap: spacing.md,

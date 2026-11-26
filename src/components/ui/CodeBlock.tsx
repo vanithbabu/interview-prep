@@ -68,7 +68,7 @@ export function CodeBlock({
           </View>
           <View style={styles.headerActions}>
             {isJsRunnable ? (
-              <Button mode="text" compact textColor="#60A5FA" icon="play" onPress={handleRun}>
+              <Button mode="text" compact textColor="#7C9BFF" icon="play" onPress={handleRun}>
                 Run
               </Button>
             ) : null}
@@ -92,12 +92,19 @@ export function CodeBlock({
       {showOutput && expectedOutput ? (
         <Surface
           elevation={0}
-          style={[styles.outputSurface, { backgroundColor: theme.colors.primaryContainer }]}
+          style={[
+            styles.outputSurface,
+            {
+              backgroundColor: theme.colors.surfaceVariant,
+              borderColor: theme.colors.outline,
+              borderWidth: 1,
+            },
+          ]}
         >
-          <Text variant="labelSmall" style={{ color: theme.colors.onPrimaryContainer, fontWeight: '700' }}>
+          <Text variant="labelSmall" style={{ color: theme.colors.secondary, fontWeight: '700' }}>
             EXPECTED OUTPUT
           </Text>
-          <Text variant="bodySmall" style={[styles.outputMono, { color: theme.colors.onPrimaryContainer, marginTop: 4 }]}>
+          <Text variant="bodySmall" style={[styles.outputMono, { color: theme.colors.onSurface, marginTop: 4 }]}>
             {expectedOutput}
           </Text>
         </Surface>

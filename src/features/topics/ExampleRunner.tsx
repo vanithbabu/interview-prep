@@ -260,16 +260,22 @@ export function ExampleRunner({
         <View style={styles.navRow}>
           <Button
             mode="outlined"
+            compact
             icon="chevron-left"
             disabled={index === 0}
+            style={styles.navSideBtn}
+            labelStyle={styles.navBtnLabel}
             onPress={() => setIndex((i) => Math.max(0, i - 1))}
           >
-            Previous
+            Prev
           </Button>
 
           <Button
             mode={isCompleted ? 'contained' : 'contained-tonal'}
+            compact
             icon={isCompleted ? 'check-circle' : 'check'}
+            style={styles.navCenterBtn}
+            labelStyle={styles.navBtnLabel}
             onPress={handleToggleComplete}
           >
             {isCompleted ? 'Completed' : 'Mark Done'}
@@ -277,9 +283,12 @@ export function ExampleRunner({
 
           <Button
             mode="outlined"
+            compact
             contentStyle={{ flexDirection: 'row-reverse' }}
             icon="chevron-right"
             disabled={index >= examples.length - 1}
+            style={styles.navSideBtn}
+            labelStyle={styles.navBtnLabel}
             onPress={() => setIndex((i) => Math.min(examples.length - 1, i + 1))}
           >
             Next
@@ -357,5 +366,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.lg,
     gap: spacing.xs,
+  },
+  navSideBtn: {
+    flex: 1,
+  },
+  navCenterBtn: {
+    flex: 1.35,
+  },
+  navBtnLabel: {
+    fontSize: 12,
+    marginHorizontal: 4,
   },
 });
